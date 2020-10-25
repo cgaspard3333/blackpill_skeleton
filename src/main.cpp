@@ -1,13 +1,23 @@
 #include "mbed.h"
-#include "USBSerial.h"
+#include "shell.h"
 
 DigitalOut led(PC_13);
-USBSerial serial;
+
+SHELL_PARAMETER_FLOAT(a, "A", 0.)
+SHELL_PARAMETER_FLOAT(b, "B", 0.)
+
+SHELL_COMMAND(sum, "Sum")
+{
+    shell_print("Sum: ");
+    shell_print(a+b);
+    shell_println();
+}
 
 int main()
 {
+    shell_init_usb();
+
     while(1) {
-        serial.printf("Hello!\r\n");
         ThisThread::sleep_for(500);
         led = 0;
         ThisThread::sleep_for(500);
